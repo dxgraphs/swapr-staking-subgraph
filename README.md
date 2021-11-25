@@ -43,7 +43,7 @@ $ npm run deploy
 
 # Extract ABIs
 
-ABIs for main contracts are not included in the repo. Instead, they are extracted from the smart contract package [`@dxdao/aqua-sc`](https://github.com/cryptonative-ch/mesa-smartcontracts)). To build the ABIs, run:
+To build the ABIs, run:
 
 ```bash
 $ npm run build-abis
