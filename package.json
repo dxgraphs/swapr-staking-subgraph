@@ -1,0 +1,46 @@
+{
+  "name": "swapr-staking-subgraph",
+  "license": "AGPL-3.0",
+  "scripts": {
+    "docker-up": "docker-compose up -d --force-recreate --renew-anon-volumes",
+    "docker-clean": "docker-compose kill && docker-compose -y rm",
+    "pretest": "npm run docker-up",
+    "prepare-rinkeby": "mustache config/rinkeby.json subgraph.template.yaml > subgraph.yaml",
+    "prepare-xdai": "mustache config/xdai.json subgraph.template.yaml > subgraph.yaml",
+    "prepare-subgraph": "ts-node bin/prepare.ts",
+    "test": "jest --runInBand",
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy-xdai": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ adamazad/swapr-staking-xdai",
+    "deploy-rinkeby": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ adamazad/swapr-staking-rinkeby",
+    "deploy-xdai-staging": "graph deploy --product hosted-service --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ adamazad/swapr-staking-staging",
+    "create-local": "graph create --node http://localhost:8020/ adamazad/swapr-staking",
+    "remove-local": "graph remove --node http://localhost:8020/ adamazad/swapr-staking",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 adamazad/swapr-staking",
+    "build-abis": "sh ./build-abis.sh"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "^0.20.1",
+    "@graphprotocol/graph-ts": "^0.20.0",
+    "@openzeppelin/contracts": "^3.4.0",
+    "axios": "^0.21.1",
+    "dayjs": "^1.10.4",
+    "docker-compose": "^0.23.6",
+    "ethers": "^5.4.1",
+    "log4js": "^6.3.0",
+    "ts-node": "^9.1.1",
+    "yargs": "^17.1.1"
+  },
+  "devDependencies": {
+    "@typechain/ethers-v5": "^7.0.1",
+    "@types/jest": "^26.0.20",
+    "@types/mustache": "^4.1.2",
+    "@types/node": "^16.4.0",
+    "hardhat": "^2.0.10",
+    "jest": "^27.0.6",
+    "mustache": "^4.2.0",
+    "ts-jest": "^27.0.4",
+    "typechain": "^5.1.2",
+    "typescript": "^4.3.5"
+  }
+}
