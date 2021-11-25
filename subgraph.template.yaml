@@ -1,0 +1,93 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: ERC20StakingRewardsDistributionFactory
+    network: {{network}}
+    source:
+      address: '{{contracts.erc20StakingRewardsDistributionFactory.address}}'
+      abi: ERC20StakingRewardsDistributionFactory
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/factory.ts
+      abis:
+        - name: ERC20StakingRewardsDistributionFactory
+          file: ./abis/ERC20StakingRewardsDistributionFactory.json
+      entities:
+        - StakingRewardsDistributionFactory
+      eventHandlers:
+        - event: DistributionCreated(address,address)
+          handler: handleDistributionCreated
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+templates:
+  - kind: ethereum/contract
+    name: ERC20StakingRewardsDistribution
+    network: {{network}}
+    source:
+      abi: ERC20StakingRewardsDistribution
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/erc20StakingRewardsDistribution.ts
+      entities:
+        - ERC20StakingRewardsDistribution
+      abis:
+        - name: ERC20StakingRewardsDistribution
+          file: ./abis/ERC20StakingRewardsDistribution.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+      eventHandlers:
+        - event: Canceled()
+          handler: handleCanceled
+        - event: Claimed(indexed address,uint256[])
+          handler: handleClaimed
+        - event: Initialized(address[],address,uint256[],uint64,uint64,bool,uint256)
+          handler: handleInitialized
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Recovered(uint256[])
+          handler: handleRecovered
+        - event: Staked(indexed address,uint256)
+          handler: handleStaked
+        - event: UpdatedRewards(uint256[])
+          handler: handleUpdatedRewards
+        - event: Withdrawn(indexed address,uint256)
+          handler: handleWithdrawn
+  - kind: ethereum/contract
+    name: StandaloneERC20StakingRewardsDistribution
+    network: {{network}}
+    source:
+      abi: StandaloneERC20StakingRewardsDistribution
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/standaloneERC20StakingRewardsDistribution.ts
+      entities:
+        - StandaloneERC20StakingRewardsDistribution
+      abis:
+        - name: StandaloneERC20StakingRewardsDistribution
+          file: ./abis/StandaloneERC20StakingRewardsDistribution.json
+      eventHandlers:
+        - event: Canceled()
+          handler: handleCanceled
+        - event: Claimed(indexed address,uint256[])
+          handler: handleClaimed
+        - event: Initialized(address[],address,uint256[],uint64,uint64,bool,uint256)
+          handler: handleInitialized
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Recovered(uint256[])
+          handler: handleRecovered
+        - event: Staked(indexed address,uint256)
+          handler: handleStaked
+        - event: Withdrawn(indexed address,uint256)
+          handler: handleWithdrawn
