@@ -1,0 +1,33 @@
+# EntityMetadata
+# Enforces important fields on each entity that implement this interface
+interface EntityMetadata {
+  # Contract address
+  id: ID!
+  # The UTC timestamp at which the auction was placed
+  createdAt: Int!
+  # The UTC timestamp at which the auction was updated
+  updatedAt: Int!
+}
+
+type StakingRewardsDistributionFactory @entity {
+  "ID: should be a unique easy-to-reference from the subgraph"
+  id: ID!
+  "Number of Distributions created via the Factory"
+  distributionsCount: Int!
+  "Factory contract address"
+  address: Bytes!
+  "Distributions contract implementation address"
+  implementationAddress: Bytes!
+  "Staking status"
+  stakingPaused: Boolean!
+}
+
+type ERC20StakingRewardsDistribution @entity {
+  "ID: should be a unique easy-to-reference from the subgraph"
+  id: ID!
+}
+
+type StandaloneERC20StakingRewardsDistribution @entity {
+  "ID: should be a unique easy-to-reference from the subgraph"
+  id: ID!
+}

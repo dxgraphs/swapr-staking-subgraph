@@ -1,0 +1,9 @@
+{
+  "network": "xdai",
+  "startBlock": 1111111,
+  "contracts": {
+    "erc20StakingRewardsDistributionFactory": {
+      "address": "0x0000000000000000000000000000000000000000"
+    }
+  }
+}
